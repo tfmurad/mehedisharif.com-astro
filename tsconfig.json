@@ -19,6 +19,12 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["**/*.ts", "**/*.tsx", "**/*.astro"],
+  "include": [
+    "**/*.ts",
+    "**/*.tsx",
+    "**/*.astro",
+    "src/pages/api/timeline.ts",
+    "src/layouts/helpers/TimelineEvents.jsx"
+  ],
   "exclude": ["node_modules"]
 }
