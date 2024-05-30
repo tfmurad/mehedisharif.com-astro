@@ -1,8 +1,8 @@
 ---
 import Divider from "@/components/Divider.astro";
+import ScrollAnimationSection from "@/helpers/ScrollAnimationSection";
 import { markdownify } from "@/lib/utils/textConverter";
 import { getEntry } from "astro:content";
-import ScrollAnimationSection from "./ScrollAnimationSection";
 const CTA = await getEntry("sections", "call-to-action");
 const { enable, title, description, button } = CTA.data;
 ---

@@ -1,6 +1,4 @@
 ---
-import config from "@/config/config.json";
-import menu from "@/config/menu.json";
 import HeaderNav from "@/helpers/HeaderNav";
 
 export interface ChildNavigationLink {
@@ -14,10 +12,6 @@ export interface NavigationLink {
   hasChildren?: boolean;
   children?: ChildNavigationLink[];
 }
-
-const { main }: { main: NavigationLink[] } = menu;
-const { navigation_button, settings } = config;
-const { pathname } = Astro.url;
 ---
 
 <HeaderNav client:load />

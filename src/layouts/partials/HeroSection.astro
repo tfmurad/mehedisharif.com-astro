@@ -5,7 +5,7 @@ import { markdownify } from "@/lib/utils/textConverter";
 import { getEntry } from "astro:content";
 
 const heroBanner = await getEntry("homepage", "-index");
-const { title, image, image_light, bio, brands } = heroBanner?.data?.banner;
+const { title, image, image_light, bio } = heroBanner?.data?.banner;
 ---
 
 <section class="section banner pb-0">

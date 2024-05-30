@@ -6,7 +6,6 @@ const COLLECTION_FOLDER = "posts";
 const { post } = Astro.props;
 
 const posts = await getSinglePage(COLLECTION_FOLDER);
-// const similarPosts = similarItems(post, posts);
 const { Content } = await post.render();
 const { title, description, author, categories, image, date, tags } = post.data;
 ---

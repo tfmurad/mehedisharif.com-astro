@@ -1,7 +1,6 @@
 ---
 import Base from "@/layouts/Base.astro";
 import { getSinglePage } from "@/lib/contentParser.astro";
-import PageHeader from "@/partials/PageHeader.astro";
 
 // get static paths for all pages
 export async function getStaticPaths() {
@@ -29,7 +28,6 @@ const { Content } = await page.render();
   description={description}
   image={image}
 >
-  <PageHeader title={title} />
   <section class="section-sm">
     <div class="container">
       <div class="row justify-center">
