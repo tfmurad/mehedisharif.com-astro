@@ -29,7 +29,11 @@ export const GET: APIRoute = async () => {
   try {
     const client = await clientPromise;
     const db = client.db(database);
-    const events = await db.collection(collection).find({}).toArray();
+    const events = await db
+      .collection(collection)
+      .find({})
+      .sort({ date: -1 })
+      .toArray();
 
     return new Response(JSON.stringify(events), {
       headers: {

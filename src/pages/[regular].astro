@@ -1,4 +1,5 @@
 ---
+export const prerender = true;
 import Base from "@/layouts/Base.astro";
 import { getSinglePage } from "@/lib/contentParser.astro";
 
@@ -18,16 +19,10 @@ export async function getStaticPaths() {
 }
 
 const { page } = Astro.props;
-const { title, meta_title, description, image } = page.data;
-const { Content } = await page.render();
+const { Content } = await page?.render();
 ---
 
-<Base
-  title={title}
-  meta_title={meta_title}
-  description={description}
-  image={image}
->
+<Base {...page?.data}>
   <section class="section-sm">
     <div class="container">
       <div class="row justify-center">

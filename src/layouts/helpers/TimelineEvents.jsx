@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { CiEdit } from "react-icons/ci";
 import { FaRegTrashAlt } from "react-icons/fa";
 import { MdClose } from "react-icons/md";
+import ImageUploader from "./ImageUploader";
 import TimelineSkeleton from "./TimelineSkeleton";
 
 const TimelineEvents = ({ secretKey }) => {
@@ -15,11 +16,13 @@ const TimelineEvents = ({ secretKey }) => {
     date: new Date().toISOString().slice(0, 10),
     heading: "",
     description: "",
+    image: "",
   });
   const [editEvent, setEditEvent] = useState(null);
   const [form, setForm] = useState(true);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const inputEl = useRef(null);
+  const [selectedImage, setSelectedImage] = useState(null);
 
   const fetchData = async () => {
     try {
@@ -82,7 +85,7 @@ const TimelineEvents = ({ secretKey }) => {
         body: JSON.stringify(newEvent),
       });
       if (response.ok) {
-        setNewEvent({ date: "", heading: "", description: "" });
+        setNewEvent({ date: "", heading: "", description: "", image: "" });
         setAddEventForm(false);
         fetchData();
       } else {
@@ -148,6 +151,21 @@ const TimelineEvents = ({ secretKey }) => {
     setEditEvent(null);
   };
 
+  const handlePreviewUrlChange = (newUrl) => {
+    if (addEventForm) {
+      setNewEvent({
+        ...newEvent,
+        image: newUrl,
+      });
+    } else if (editEvent) {
+      setEditEvent({
+        ...editEvent,
+        image: newUrl,
+      });
+    }
+    setSelectedImage(newUrl);
+  };
+
   return (
     <>
       {loading ? (
@@ -173,13 +191,13 @@ const TimelineEvents = ({ secretKey }) => {
             <div className="container">
               <div className="py-16">
                 <div className="content flex items-center justify-center">
-                  <ul className="relative list-none border-l border-border pl-0 dark:border-darkmode-border">
+                  <ul className="relative list-none border-l border-border pl-0 dark:border-darkmode-border max-w-[32rem]">
                     <h2 className="mt-0 -translate-x-3 bg-body dark:bg-darkmode-body">
                       My Timeline
                     </h2>
                     {timelineEvent.map((event) => (
                       <li key={event._id} className="mb-12 ml-4">
-                        <div className="absolute -left-1.5 mt-2 h-3 w-3 rounded-full border border-white bg-darkmode-body dark:bg-body dark:border-gray-900 dark:bg-darkmode-border"></div>
+                        <div className="absolute -left-1.5 mt-2 h-3 w-3 rounded-full border border-white dark:border-dark bg-darkmode-body dark:bg-body"></div>
                         <h3 className="group relative mt-0 mb-1 flex items-center text-lg font-semibold text-dark dark:text-darkmode-dark">
                           <span>{event.heading}</span>
                           <button
@@ -192,14 +210,21 @@ const TimelineEvents = ({ secretKey }) => {
                         <time className="text-xs font-normal leading-none text-text/70 dark:text-darkmode-text/70">
                           {dateFormat(event.date)}
                         </time>
-                        <p className="mb-4 mt-2 text-sm font-normal text-text dark:text-darkmode-text">
+                        <p className="mb-4 mt-2 text-sm font-normal text-text dark:text-darkmode-text text-balance">
                           {event.description}
                         </p>
+                        {event.image && (
+                          <img
+                            className="rounded-md w-[200px]"
+                            src={`${event.image}`}
+                            alt={event.heading}
+                          />
+                        )}
                       </li>
                     ))}
                     <button
                       onClick={() => setAddEventForm(true)}
-                      className="absolute -left-[20px] h-8 w-8 rounded-full border border-white bg-darkmode-body dark:bg-body dark:border-gray-900 dark:bg-darkmode-border"
+                      className="absolute -left-[20px] h-8 w-8 rounded-full border dark:border-white bg-darkmode-body border-gray-900 dark:bg-body"
                     >
                       <span className="text-white dark:text-dark">+</span>
                     </button>
@@ -343,6 +368,15 @@ const TimelineEvents = ({ secretKey }) => {
                                             ...editEvent,
                                             description: e.target.value,
                                           })
+                                    }
+                                  />
+                                  <ImageUploader
+                                    onImageSelect={setSelectedImage}
+                                    onPreviewUrlChange={handlePreviewUrlChange}
+                                    value={
+                                      addEventForm
+                                        ? newEvent.image
+                                        : editEvent.image
                                     }
                                   />
                                   <button
