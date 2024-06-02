@@ -43,7 +43,7 @@ body {
 .section {
   @apply py-16;
   &-title {
-    @apply text-base capitalize md:text-h3;
+    @apply text-base capitalize md:text-h3 lg:text-h4;
     strong {
       @apply relative inline-block pr-16;
       &::before {
@@ -219,4 +219,31 @@ body {
   opacity: 0;
   pointer-events: none; /* Disable pointer events when hidden */
   transition: opacity 0.3s ease-in-out;
+}
+
+// modal image animation
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.animate-fade-out {
+  animation: fadeOut 0.3s ease-in-out;
 }

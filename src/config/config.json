@@ -1,6 +1,6 @@
 {
   "site": {
-    "title": "Mehedi sharif",
+    "title": "Mehedi Sharif",
     "base_url": "https://mehedisharif.com/",
     "base_path": "/",
     "trailing_slash": false,
@@ -9,7 +9,7 @@
     "logo_darkmode": "/images/logo-light.png",
     "logo_width": "217",
     "logo_height": "50",
-    "logo_text": "Mehedi sharif"
+    "logo_text": "Mehedi Sharif"
   },
 
   "bio": {

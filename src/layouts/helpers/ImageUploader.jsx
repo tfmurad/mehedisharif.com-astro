@@ -1,12 +1,28 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 
 const ImageUploader = ({ onImageSelect, onPreviewUrlChange, value }) => {
   const [width] = useState(800);
   const [previewUrl, setPreviewUrl] = useState(null);
+  const inputRef = useRef(null);
 
   const handleImageChange = (event) => {
     const imageFile = event.target.files[0];
     if (!imageFile) return;
+    processImage(imageFile);
+  };
+
+  const handleDragOver = (event) => {
+    event.preventDefault();
+  };
+
+  const handleDrop = (event) => {
+    event.preventDefault();
+    const imageFile = event.dataTransfer.files[0];
+    if (!imageFile) return;
+    processImage(imageFile);
+  };
+
+  const processImage = (imageFile) => {
     onImageSelect(imageFile);
 
     const reader = new FileReader();
@@ -56,18 +72,27 @@ const ImageUploader = ({ onImageSelect, onPreviewUrlChange, value }) => {
   };
 
   return (
-    <div>
+    <div
+      className="flex flex-col items-center justify-center border-2 border-dashed border-gray-300 rounded-lg p-5 cursor-pointer transition duration-300 hover:border-gray-400"
+      onClick={() => inputRef.current.click()}
+      onDragOver={handleDragOver}
+      onDrop={handleDrop}
+    >
+      <label className="text-lg text-gray-600 mb-2">
+        {value ? "Click or drag and drop to update the image" : "Click or drag and drop an image here"}
+      </label>
       <input
         type="file"
-        id="inputImage"
+        ref={inputRef}
         accept=".jpg, .jpeg, .png"
         onChange={handleImageChange}
+        className="hidden"
       />
       {(previewUrl || value) && (
         <img
           src={previewUrl || value}
           alt="Preview"
-          style={{ width: "60px", borderRadius: "6px" }}
+          className="w-15 rounded-md mt-4"
         />
       )}
     </div>
