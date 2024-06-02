@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 const ImageUploader = ({ onImageSelect, onPreviewUrlChange, value }) => {
-  const [width] = useState(200);
+  const [width] = useState(800);
   const [previewUrl, setPreviewUrl] = useState(null);
 
   const handleImageChange = (event) => {

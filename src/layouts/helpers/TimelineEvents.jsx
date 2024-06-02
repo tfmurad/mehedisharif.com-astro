@@ -1,6 +1,6 @@
 import dateFormat from "@/lib/utils/dateFormat";
 import cryptoJs from "crypto-js";
-import { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { CiEdit } from "react-icons/ci";
 import { FaRegTrashAlt } from "react-icons/fa";
 import { MdClose } from "react-icons/md";
@@ -23,8 +23,10 @@ const TimelineEvents = ({ secretKey }) => {
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const inputEl = useRef(null);
   const [selectedImage, setSelectedImage] = useState(null);
+  const [modalImage, setModalImage] = useState(null);
 
   const fetchData = async () => {
+    setLoading(true);
     try {
       const response = await fetch("/api/timeline");
       if (!response.ok) {
@@ -166,6 +168,19 @@ const TimelineEvents = ({ secretKey }) => {
     setSelectedImage(newUrl);
   };
 
+  useEffect(() => {
+    const handleEsc = (event) => {
+      if (event.keyCode === 27) {
+        setModalImage(null);
+      }
+    };
+    window.addEventListener("keydown", handleEsc);
+
+    return () => {
+      window.removeEventListener("keydown", handleEsc);
+    };
+  }, []);
+
   return (
     <>
       {loading ? (
@@ -215,9 +230,10 @@ const TimelineEvents = ({ secretKey }) => {
                         </p>
                         {event.image && (
                           <img
-                            className="rounded-md w-[200px]"
+                            className="rounded-md w-[200px] cursor-pointer"
                             src={`${event.image}`}
                             alt={event.heading}
+                            onClick={() => setModalImage(event.image)}
                           />
                         )}
                       </li>
@@ -400,6 +416,21 @@ const TimelineEvents = ({ secretKey }) => {
               </div>
             </div>
           )}
+        </div>
+      )}
+      {modalImage && (
+        <div className="fixed inset-0 z-[100000] flex items-center justify-center bg-black bg-opacity-75">
+          <button
+            className="absolute top-4 right-4 text-white"
+            onClick={() => setModalImage(null)}
+          >
+            <MdClose size={32} />
+          </button>
+          <img
+            src={modalImage}
+            alt="Full Size"
+            className="max-w-full max-h-full rounded"
+          />
         </div>
       )}
     </>

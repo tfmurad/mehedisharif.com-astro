@@ -208,3 +208,15 @@ body {
   border-radius: 0.5rem;
   background-color: hsl(200, 20%, 80%);
 }
+
+/* CSS for the modal animation */
+.modal-show {
+  opacity: 1;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.modal-hide {
+  opacity: 0;
+  pointer-events: none; /* Disable pointer events when hidden */
+  transition: opacity 0.3s ease-in-out;
+}
