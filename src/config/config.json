@@ -20,7 +20,8 @@
     "email": "mehedi@themefisher.com",
     "phone": "+8801672506744",
     "address": "Shyamoli, Dhaka, Bangladesh",
-    "map_link": "https://goo.gl/maps/Nq6gUVFVozBzXz1w5"
+    "map_link": "https://goo.gl/maps/Nq6gUVFVozBzXz1w5",
+    "formsubmit_endpoint": "mehedi@themefisher.com"
   },
 
   "settings": {
