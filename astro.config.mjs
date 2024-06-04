@@ -8,12 +8,16 @@ import remarkCollapse from "remark-collapse";
 import remarkToc from "remark-toc";
 import config from "./src/config/config.json";
 import node from "@astrojs/node";
+import netlify from "@astrojs/netlify";
 
 // https://astro.build/config
 export default defineConfig({
   output: "server",
-  adapter: node({
-    mode: "standalone",
+  // adapter: node({
+  //   mode: "standalone",
+  // }),
+  adapter: netlify({
+    edgeMiddleware: true,
   }),
   site: config.site.base_url ? config.site.base_url : "http://examplesite.com",
   base: config.site.base_path ? config.site.base_path : "/",
